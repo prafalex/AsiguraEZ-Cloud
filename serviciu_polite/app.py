@@ -97,7 +97,24 @@ def get_expiring_policies():
     
 
 @app.route('/policy/payments/<int:policy_id>', methods=['GET'])
-#add after payments service
+def get_policy_and_payments(policy_id):
+    try:
+        policy = InsurancePolicy.query.get(policy_id)
+        if not policy:
+            return make_response(jsonify({'message': 'Policy not found'}), 404)
+
+        payments_url = f"http://serviciu_plati:5002/payment/policy/{policy_id}"
+        payments_response = requests.get(payments_url)
+
+        if payments_response.status_code == 200:
+            payments = payments_response.json()
+        else:
+            return make_response(jsonify({'message': 'Error getting payments for policy'}), 500)
+
+        return make_response(jsonify({'policy': policy.json_policy(), 'payments': payments}), 200)
+    except Exception as e:
+        return make_response(jsonify({'message': f'Error getting policy and payments: {str(e)}'}), 500)
+
 
 @app.route('/policy', methods=['POST'])
 def add_policy():
