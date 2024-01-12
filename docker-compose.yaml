@@ -1,0 +1,146 @@
+networks:
+  backend:
+    driver: overlay
+
+
+services:
+  serviciu_clienti:
+    image: alexpraf/serviciu_clienti:latest
+    environment:
+      - DB_CONNECTION_CLIENTI=postgresql://user_clienti:clienti123@serviciu_baza_de_date_clienti:5432/db_clienti
+    depends_on:
+      - serviciu_baza_de_date_clienti
+    networks:
+      - backend
+    ports:
+      - "5000:5000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  serviciu_polite:
+    image: alexpraf/serviciu_polite:latest
+    environment:
+      - DB_CONNECTION_POLITE=postgresql://user_polite:polite123@serviciu_baza_de_date_polite:5432/db_polite
+    depends_on:
+      - serviciu_baza_de_date_polite
+    networks:
+      - backend
+    ports:
+      - "5001:5001"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+  
+  serviciu_plati:
+    image: alexpraf/serviciu_plati:latest
+    environment:
+      - DB_CONNECTION_PLATI=postgresql://user_plati:plati123@serviciu_baza_de_date_plati:5432/db_plati
+    depends_on:
+      - serviciu_baza_de_date_plati
+    networks:
+      - backend
+    ports:
+      - "5002:5002"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  serviciu_daune:
+    image: alexpraf/serviciu_daune:latest
+    environment:
+      - DB_CONNECTION_DAUNE=postgresql://user_daune:daune123@serviciu_baza_de_date_daune:5432/db_daune
+    depends_on:
+      - serviciu_baza_de_date_daune
+    networks:
+      - backend
+    ports:
+      - "5003:5003"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M        
+
+  serviciu_baza_de_date_clienti:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=clienti123
+      - POSTGRES_USER=user_clienti
+      - POSTGRES_DB=db_clienti
+    volumes:
+      - pgdata_clienti:/var/lib/postgresql/data
+      - ./serviciu_baza_de_date_clienti/init_clienti.sql:/docker-entrypoint-initdb.d/init_clienti.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: ["postgres", "-c", "max_connections=150"]  
+
+  serviciu_baza_de_date_polite:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=polite123
+      - POSTGRES_USER=user_polite
+      - POSTGRES_DB=db_polite
+    volumes:
+      - pgdata_polite:/var/lib/postgresql/data 
+      - ./serviciu_baza_de_date_polite/init_polite.sql:/docker-entrypoint-initdb.d/init_polite.sql
+    ports:
+      - "5433:5433"
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: ["postgres", "-c", "max_connections=150"]
+
+  serviciu_baza_de_date_plati:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=plati123
+      - POSTGRES_USER=user_plati
+      - POSTGRES_DB=db_plati
+    volumes:
+      - pgdata_plati:/var/lib/postgresql/data 
+      - ./serviciu_baza_de_date_plati/init_plati.sql:/docker-entrypoint-initdb.d/init_plati.sql
+    ports:
+      - "5434:5434"
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: ["postgres", "-c", "max_connections=150"]       
+
+  serviciu_baza_de_date_daune:
+    image: postgres:12
+    environment:
+      - POSTGRES_PASSWORD=daune123
+      - POSTGRES_USER=user_daune
+      - POSTGRES_DB=db_daune
+    volumes:
+      - pgdata_daune:/var/lib/postgresql/data 
+      - ./serviciu_baza_de_date_daune/init_daune.sql:/docker-entrypoint-initdb.d/init_daune.sql
+    ports:
+      - "5435:5435"
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: ["postgres", "-c", "max_connections=150"] 
+volumes:
+  pgdata_clienti: {}
+  pgdata_polite: {}
+  pgdata_plati: {}
+  pgdata_daune: {}
