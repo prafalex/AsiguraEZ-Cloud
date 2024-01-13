@@ -133,7 +133,7 @@ def get_expiring_policies_info():
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
         end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
 
-        insurance_policy_service_url = f"http://serviciu-polite:5001/policy/expiring?start_date={start_date}&end_date={end_date}"
+        insurance_policy_service_url = f"http://serviciu-polite:81/policy/expiring?start_date={start_date}&end_date={end_date}"
         response = requests.get(insurance_policy_service_url)
 
         if response.status_code == 200:
