@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-clienti
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-clienti
+  template:
+    metadata:
+      labels:
+        app: serviciu-clienti
+    spec:
+      containers:
+        - name: serviciu-clienti
+          image: alexpraf/serviciu_clienti:latest 
+          ports:
+            - containerPort: 5000

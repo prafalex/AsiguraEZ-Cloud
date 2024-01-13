@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-plati
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-plati
+  template:
+    metadata:
+      labels:
+        app: serviciu-plati
+    spec:
+      containers:
+        - name: serviciu-plati
+          image: alexpraf/serviciu_plati:latest 
+          ports:
+            - containerPort: 5000

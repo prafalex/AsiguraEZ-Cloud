@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-baza-de-date-clienti
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-baza-de-date-clienti
+  template:
+    metadata:
+      labels:
+        app: serviciu-baza-de-date-clienti
+    spec:
+      containers:
+        - name: serviciu-baza-de-date-clienti
+          image: alexpraf/serviciu_baza_de_date_clienti:latest 
+          ports:
+            - containerPort: 5000

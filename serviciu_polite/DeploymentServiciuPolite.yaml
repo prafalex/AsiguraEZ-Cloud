@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-polite
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-polite
+  template:
+    metadata:
+      labels:
+        app: serviciu-polite
+    spec:
+      containers:
+        - name: serviciu-polite
+          image: alexpraf/serviciu_polite:latest 
+          ports:
+            - containerPort: 5000

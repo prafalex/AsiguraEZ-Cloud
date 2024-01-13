@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-daune
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-daune
+  template:
+    metadata:
+      labels:
+        app: serviciu-daune
+    spec:
+      containers:
+        - name: serviciu-daune
+          image: alexpraf/serviciu_daune:latest 
+          ports:
+            - containerPort: 5000

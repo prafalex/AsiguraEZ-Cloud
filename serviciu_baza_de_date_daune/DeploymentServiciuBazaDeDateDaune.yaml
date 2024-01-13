@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-baza-de-date-daune
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-baza-de-date-daune
+  template:
+    metadata:
+      labels:
+        app: serviciu-baza-de-date-daune
+    spec:
+      containers:
+        - name: serviciu-baza-de-date-daune
+          image: alexpraf/serviciu_baza_de_date_daune:latest 
+          ports:
+            - containerPort: 5000

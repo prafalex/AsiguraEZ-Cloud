@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviciu-baza-de-date-polite
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: serviciu-baza-de-date-polite
+  template:
+    metadata:
+      labels:
+        app: serviciu-baza-de-date-polite
+    spec:
+      containers:
+        - name: serviciu-baza-de-date-polite
+          image: alexpraf/serviciu_baza_de_date_polite:latest 
+          ports:
+            - containerPort: 5000
