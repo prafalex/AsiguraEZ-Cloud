@@ -1,33 +1,30 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import useInsuredData from '../hooks/clientGetHook'
 
 import NavMenu from '../components/NavMenu/NavMenu'
-import DataTableClients from '../components/DataTableClients/DataTableClients'
+import DataTable from '../components/DataTable/DataTable'
 
+import TableClientsStyles from '../components/DataTable/DataTable.module.sass'
 import AppStyles from '../App.module.sass'
 
 function Clients() {
-    const [insured, setInsured] = useState({})
-
-	const fetchInsured = async () => {
-		await axios.get('http://127.0.0.1:5000/insured')
-			.then((res) => {
-				setInsured(res.data)
-			})
-	}
-
-	useEffect(() => {
-		fetchInsured()
-	}, [insured])
+    const { insured, checkData } = useInsuredData()
 
     return (
         <>
             <NavMenu />
-            
+
             <div className={AppStyles['page--size']}>
-                {Object.values(insured).map((item) => (
-                    <DataTableClients item={item} />
-                ))}
+                {!checkData.length ?
+                    <>
+                        {insured.length ?
+                            <div className={TableClientsStyles['custom--table']}>
+                                {Object.values(insured).map((item) => (
+                                    <DataTable item={item} />
+                                ))}
+                            </div>
+                        : <p>There is no data available.</p>}
+                    </>
+                : <p>{checkData}</p>}
             </div>
         </>
     )

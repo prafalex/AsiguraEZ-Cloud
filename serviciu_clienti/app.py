@@ -22,7 +22,12 @@ class Insured(db.Model):
     email = db.Column(db.String(255), nullable=False)
 
     def json_insured(self):
-        return {'id': self.id,'username': self.first_name, 'email': self.email}
+        return { 'id': self.id,
+            'firstName': self.first_name,
+            'surname': self.surname,
+            'email': self.email,
+            'phone': self.phone,
+            'address': self.address }
     
 @app.route('/insured', methods=['GET'])
 def get_insured():

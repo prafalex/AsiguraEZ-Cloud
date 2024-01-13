@@ -1,0 +1,56 @@
+@import '../../Variables.module'
+
+.custom--table
+    box-shadow: 0 .5rem 3rem .2rem rgba(0, 0, 0, .1)
+
+.table--row
+    display: flex
+    align-items: center
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 2rem
+
+    &:nth-child(odd)
+        color: $white
+        background: $light-violet
+
+    &:nth-child(even)
+        background: $white
+
+    .data-id
+        max-width: 5%
+        flex-basis: 5%
+
+    .data-info-1
+        max-width: 20%
+        flex-basis: 20%
+
+    .data-info-2
+        max-width: 60%
+        flex-basis: 60%
+
+    .data-actions
+        display: flex
+        align-items: center
+        gap: 1rem
+        max-width: 15%
+        flex-basis: 15%
+
+    .data
+        padding: 1.2rem 2.5rem
+
+        .icon
+            display: flex
+            align-items: center
+            justify-content: center
+            color: $white
+            background: $dark-violet
+            width: 2rem
+            height: 2rem
+            padding: 1rem
+            border-radius: 100%
+            cursor: pointer
+            transition: .2s ease-in-out
+
+            &:hover
+                color: $black
+                background: $chill-orange
