@@ -1,10 +1,7 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
-import styles from './App.module.sass'
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Clients from './pages/Clients'
+import ClientDetails from './pages/ClientDetails'
 import Claims from './pages/Claims'
 import Payments from './pages/Payments'
 import Policies from './pages/Policies'
@@ -12,18 +9,17 @@ import NotFound from './pages/NotFound'
 
 function App() {
 	return (
-		<>
-			<BrowserRouter>
-				<Routes>
-					<Route exact path='/' element={<Home />} />
-					<Route exact path='/clients' element={<Clients />} />
-					<Route exact path='/claims' element={<Claims />} />
-					<Route exact path='/payments' element={<Payments />} />
-					<Route exact path='/policies' element={<Policies />} />
-					<Route exact path='/*' element={<NotFound />} />
-				</Routes>
-			</BrowserRouter>
-		</>
+		<Router>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/clients/" element={<Clients />} />
+				<Route path="/clients/:id" element={<ClientDetails />} />
+				<Route path="/claims" element={<Claims />} />
+				<Route path="/payments" element={<Payments />} />
+				<Route path="/policies" element={<Policies />} />
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+		</Router>
 	)
 }
 
