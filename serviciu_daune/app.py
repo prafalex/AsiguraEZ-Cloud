@@ -118,7 +118,7 @@ def get_claims_by_status(status):
 
 def check_policy_exists(id_policy):
     try:
-        policy_service_url = f"http://serviciu_polite:5001/policy/{id_policy}"
+        policy_service_url = f"http://serviciu-polite:5001/policy/{id_policy}"
         response = requests.get(policy_service_url)
         return response.status_code == 200 
     except Exception as e:

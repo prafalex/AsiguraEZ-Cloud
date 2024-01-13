@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: serviciu-daune
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: serviciu-daune
@@ -15,5 +15,9 @@ spec:
       containers:
         - name: serviciu-daune
           image: alexpraf/serviciu_daune:latest 
+          imagePullPolicy: Always
+          env:
+            - name: DB_CONNECTION_DAUNE
+              value: "postgresql://user_daune:daune123@serviciu-baza-de-date-daune:5432/db_daune"
           ports:
-            - containerPort: 5000
+            - containerPort: 5003

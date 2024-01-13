@@ -4,6 +4,10 @@ from os import environ
 import requests
 from flask_cors import CORS
 from datetime import datetime
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 
 
 app = Flask(__name__)
@@ -143,10 +147,12 @@ def add_policy():
 
 def check_insured_exists(id_insured):
     try:
-        insured_service_url = f"http://serviciu_clienti:5000/insured/{id_insured}"
+        insured_service_url = f"http://serviciu-clienti:80/insured/{id_insured}"
         response = requests.get(insured_service_url)
+        logging.info(f"Response: {response} .")
         return response.status_code == 200
     except Exception as e:
+        logging.error(f"Error checking if insured with ID {id_insured} exists: {str(e)}")
         return False
 
       

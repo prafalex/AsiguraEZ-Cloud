@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: serviciu-polite
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: serviciu-polite
@@ -15,5 +15,9 @@ spec:
       containers:
         - name: serviciu-polite
           image: alexpraf/serviciu_polite:latest 
+          imagePullPolicy: Always
+          env:
+            - name: DB_CONNECTION_POLITE
+              value: "postgresql://user_polite:polite123@serviciu-baza-de-date-polite:5432/db_polite"
           ports:
-            - containerPort: 5000
+            - containerPort: 5001

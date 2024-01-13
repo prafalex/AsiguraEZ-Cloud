@@ -7,6 +7,6 @@ spec:
     app: serviciu-plati
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
+      port: 82
+      targetPort: 5002
+  type: ClusterIP

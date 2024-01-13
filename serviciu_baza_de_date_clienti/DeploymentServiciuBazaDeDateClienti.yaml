@@ -1,9 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-sql-script
+data:
+  init.sql: |
+    -- Create the insured table
+    CREATE TABLE IF NOT EXISTS insured (
+        id SERIAL PRIMARY KEY,
+        first_name VARCHAR(255) NOT NULL,
+        surname VARCHAR(255) NOT NULL,
+        address VARCHAR(255) NOT NULL,
+        phone VARCHAR(20) NOT NULL,
+        email VARCHAR(255) NOT NULL
+    );
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: serviciu-baza-de-date-clienti
 spec:
-  replicas: 3
+  replicas: 1 
   selector:
     matchLabels:
       app: serviciu-baza-de-date-clienti
@@ -13,7 +29,25 @@ spec:
         app: serviciu-baza-de-date-clienti
     spec:
       containers:
-        - name: serviciu-baza-de-date-clienti
-          image: alexpraf/serviciu_baza_de_date_clienti:latest 
+        - name: postgres
+          image: postgres:12
+          env:
+            - name: POSTGRES_PASSWORD
+              value: clienti123
+            - name: POSTGRES_USER
+              value: user_clienti
+            - name: POSTGRES_DB
+              value: db_clienti
           ports:
-            - containerPort: 5000
+            - containerPort: 5432
+          volumeMounts:
+            - name: pgdata-clienti
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: pgdata-clienti
+          emptyDir: {}
+        - name: init-sql-script
+          configMap:
+            name: init-sql-script

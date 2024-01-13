@@ -1,9 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-sql-script-daune
+data:
+  init.sql: |
+    CREATE TABLE IF NOT EXISTS insurance_claim (
+    id SERIAL PRIMARY KEY,
+    id_policy INT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    date_reported TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    status VARCHAR(255) NOT NULL);
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: serviciu-baza-de-date-daune
 spec:
-  replicas: 3
+  replicas: 1 
   selector:
     matchLabels:
       app: serviciu-baza-de-date-daune
@@ -13,7 +27,25 @@ spec:
         app: serviciu-baza-de-date-daune
     spec:
       containers:
-        - name: serviciu-baza-de-date-daune
-          image: alexpraf/serviciu_baza_de_date_daune:latest 
+        - name: postgres
+          image: postgres:12
+          env:
+            - name: POSTGRES_PASSWORD
+              value: daune123
+            - name: POSTGRES_USER
+              value: user_daune
+            - name: POSTGRES_DB
+              value: db_daune
           ports:
-            - containerPort: 5000
+            - containerPort: 5432
+          volumeMounts:
+            - name: pgdata-daune
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql-script-daune
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: pgdata-daune
+          emptyDir: {}
+        - name: init-sql-script-daune
+          configMap:
+            name: init-sql-script-daune

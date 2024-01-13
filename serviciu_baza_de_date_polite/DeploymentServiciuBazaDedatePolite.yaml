@@ -1,9 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-sql-script-polite
+data:
+  init.sql: |
+    CREATE TABLE IF NOT EXISTS insurance_policy (
+    id SERIAL PRIMARY KEY,
+    id_insured INT,
+    policy_no VARCHAR(255) NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP,
+    amount NUMERIC(10,2),
+    status VARCHAR(255) NOT NULL);
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: serviciu-baza-de-date-polite
 spec:
-  replicas: 3
+  replicas: 1 
   selector:
     matchLabels:
       app: serviciu-baza-de-date-polite
@@ -13,7 +29,25 @@ spec:
         app: serviciu-baza-de-date-polite
     spec:
       containers:
-        - name: serviciu-baza-de-date-polite
-          image: alexpraf/serviciu_baza_de_date_polite:latest 
+        - name: postgres
+          image: postgres:12
+          env:
+            - name: POSTGRES_PASSWORD
+              value: polite123
+            - name: POSTGRES_USER
+              value: user_polite
+            - name: POSTGRES_DB
+              value: db_polite
           ports:
-            - containerPort: 5000
+            - containerPort: 5432
+          volumeMounts:
+            - name: pgdata-polite
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql-script-polite
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: pgdata-polite
+          emptyDir: {}
+        - name: init-sql-script-polite
+          configMap:
+            name: init-sql-script-polite

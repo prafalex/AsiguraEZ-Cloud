@@ -7,6 +7,6 @@ spec:
     app: serviciu-baza-de-date-clienti
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

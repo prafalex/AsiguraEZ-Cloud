@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: serviciu-plati
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: serviciu-plati
@@ -15,5 +15,9 @@ spec:
       containers:
         - name: serviciu-plati
           image: alexpraf/serviciu_plati:latest 
+          imagePullPolicy: Always
+          env:
+            - name: DB_CONNECTION_PLATI
+              value: "postgresql://user_plati:plati123@serviciu-baza-de-date-plati:5432/db_plati"
           ports:
-            - containerPort: 5000
+            - containerPort: 5002

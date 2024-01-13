@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: serviciu-clienti
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: serviciu-clienti
@@ -15,5 +15,9 @@ spec:
       containers:
         - name: serviciu-clienti
           image: alexpraf/serviciu_clienti:latest 
+          imagePullPolicy: Always
+          env:
+            - name: DB_CONNECTION_CLIENTI
+              value: "postgresql://user_clienti:clienti123@serviciu-baza-de-date-clienti:5432/db_clienti"
           ports:
             - containerPort: 5000
