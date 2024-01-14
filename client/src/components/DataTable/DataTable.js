@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import useDeleteInsured from '../../hooks/clientDeleteHook'
+import useDeleteInsured from '../../hooks/useDeleteInsured'
 import styles from './DataTable.module.sass'
 
 function DataTableClients({ item }) {
