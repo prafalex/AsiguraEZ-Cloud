@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import useInsuredDetailsData from '../hooks/clientGetDetailsHook'
+import useInsuredDetailsData from '../hooks/useInsuredDetailsData'
 
 import NavMenu from '../components/NavMenu/NavMenu'
 import AppStyles from '../App.module.sass'

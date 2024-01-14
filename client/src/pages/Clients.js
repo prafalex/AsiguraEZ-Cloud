@@ -1,4 +1,4 @@
-import useInsuredData from '../hooks/clientGetHook'
+import useInsuredData from '../hooks/useInsuredData'
 
 import NavMenu from '../components/NavMenu/NavMenu'
 import DataTable from '../components/DataTable/DataTable'
