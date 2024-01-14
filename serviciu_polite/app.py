@@ -107,7 +107,7 @@ def get_policy_and_payments(policy_id):
         if not policy:
             return make_response(jsonify({'message': 'Policy not found'}), 404)
 
-        payments_url = f"http://serviciu_plati:5002/payment/policy/{policy_id}"
+        payments_url = f"http://serviciu_plati:82/payment/policy/{policy_id}"
         payments_response = requests.get(payments_url)
 
         if payments_response.status_code == 200:
