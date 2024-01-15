@@ -6,6 +6,7 @@ import Claims from './pages/Claims'
 import Payments from './pages/Payments'
 import Policies from './pages/Policies'
 import NotFound from './pages/NotFound'
+import AddNewClient from './pages/AddNewClient'
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/clients/" element={<Clients />} />
 				<Route path="/clients/:id" element={<ClientDetails />} />
+				<Route path="/clients/add/" element={<AddNewClient />} />
 				<Route path="/claims" element={<Claims />} />
 				<Route path="/payments" element={<Payments />} />
 				<Route path="/policies" element={<Policies />} />
