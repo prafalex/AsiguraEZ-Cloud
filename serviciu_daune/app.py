@@ -4,9 +4,15 @@ from os import environ
 import requests
 from datetime import datetime
 from flask_cors import CORS
+from prometheus_flask_exporter import PrometheusMetrics
 
 
 app = Flask(__name__)
+
+metrics = PrometheusMetrics(app)
+
+metrics.info('polite_info', 'Polite info', version='1')
+
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_CONNECTION_DAUNE')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

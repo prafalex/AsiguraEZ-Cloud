@@ -19,5 +19,7 @@ spec:
           env:
             - name: DB_CONNECTION_CLIENTI
               value: "postgresql://user_clienti:clienti123@serviciu-baza-de-date-clienti:5432/db_clienti"
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: "/tmp"
           ports:
             - containerPort: 5000

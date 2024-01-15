@@ -19,5 +19,7 @@ spec:
           env:
             - name: DB_CONNECTION_PLATI
               value: "postgresql://user_plati:plati123@serviciu-baza-de-date-plati:5432/db_plati"
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: "/tmp"
           ports:
             - containerPort: 5002

@@ -19,5 +19,7 @@ spec:
           env:
             - name: DB_CONNECTION_DAUNE
               value: "postgresql://user_daune:daune123@serviciu-baza-de-date-daune:5432/db_daune"
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: "/tmp"
           ports:
             - containerPort: 5003

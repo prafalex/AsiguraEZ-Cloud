@@ -19,5 +19,7 @@ spec:
           env:
             - name: DB_CONNECTION_POLITE
               value: "postgresql://user_polite:polite123@serviciu-baza-de-date-polite:5432/db_polite"
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: "/tmp"
           ports:
             - containerPort: 5001
