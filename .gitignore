@@ -1,4 +1,5 @@
 .DS_Store
 .DS_Store
 
+docker-run.bat
 docker-compose-imclaudiu.yaml

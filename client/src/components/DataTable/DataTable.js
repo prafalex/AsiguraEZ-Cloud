@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import useDeleteInsured from '../../hooks/useDeleteInsured'
+import useDeleteInsured from '../../hooks/insureds/useDeleteInsured'
 import styles from './DataTable.module.sass'
 
 function DataTableClients({ id, info_1, info_2, linkTo }) {
@@ -9,7 +9,7 @@ function DataTableClients({ id, info_1, info_2, linkTo }) {
 
     const linkToDetails = (user_id) => {
         switch (linkTo) {
-            case 'clients': return navigate(`/clients/${user_id}`)
+            case 'insureds': return navigate(`/insureds/${user_id}`)
             default: return
         }
     }

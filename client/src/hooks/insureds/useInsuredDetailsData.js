@@ -16,7 +16,7 @@ const useInsuredDetailsData = (user_id) => {
 
     useEffect(() => {
         fetchInsuredDetails(insuredDetails)
-    }, [])
+    }, [user_id])
 
     return { insuredDetails, checkData, fetchInsuredDetails }
 }

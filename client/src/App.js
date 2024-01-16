@@ -1,21 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import Clients from './pages/Clients'
-import ClientDetails from './pages/ClientDetails'
+import Insureds from './pages/Insureds/Insureds'
+import InsuredDetails from './pages/Insureds/InsuredDetails'
 import Claims from './pages/Claims'
 import Payments from './pages/Payments'
 import Policies from './pages/Policies'
 import NotFound from './pages/NotFound'
-import AddNewClient from './pages/AddNewClient'
+import AddNewInsured from './pages/Insureds/AddNewInsured'
 
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/clients/" element={<Clients />} />
-				<Route path="/clients/:id" element={<ClientDetails />} />
-				<Route path="/clients/add/" element={<AddNewClient />} />
+				<Route path="/insureds/" element={<Insureds />} />
+				<Route path="/insureds/:id" element={<InsuredDetails />} />
+				<Route path="/insureds/add/" element={<AddNewInsured />} />
 				<Route path="/claims" element={<Claims />} />
 				<Route path="/payments" element={<Payments />} />
 				<Route path="/policies" element={<Policies />} />
