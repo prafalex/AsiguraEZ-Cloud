@@ -23,14 +23,3 @@ spec:
               value: "/tmp"
           ports:
             - containerPort: 5001
-        - name: logstash
-          image: docker.elastic.co/logstash/logstash:7.15.1
-          volumeMounts:
-            - name: logstash-config
-              mountPath: /tmp/logstash/pipeline/
-          ports:
-            - containerPort: 5044
-      volumes:
-        - name: logstash-config
-          configMap:
-            name: logstash-config

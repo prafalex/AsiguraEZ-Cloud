@@ -4,17 +4,10 @@ from os import environ
 import requests
 from flask_cors import CORS
 from datetime import datetime
-import logging
 from prometheus_flask_exporter import PrometheusMetrics
 
 
-
-logging.basicConfig(level=logging.INFO)
-
-
-
 app = Flask(__name__)
-
 metrics = PrometheusMetrics(app)
 
 metrics.info('polite_info', 'Polite info', version='1')
@@ -126,7 +119,32 @@ def get_policy_and_payments(policy_id):
         return make_response(jsonify({'policy': policy.json_policy(), 'payments': payments}), 200)
     except Exception as e:
         return make_response(jsonify({'message': f'Error getting policy and payments: {str(e)}'}), 500)
+    
 
+@app.route('/policy/<int:policy_id>', methods=['PUT'])
+def update_policy(policy_id):
+    try:
+        policy = InsurancePolicy.query.get(policy_id)
+        if not policy:
+            return make_response(jsonify({'message': 'Policy not found'}), 404)
+
+        data = request.get_json()
+
+        if not check_insured_exists(data.get('id_insured', policy.id_insured)):
+            return make_response(jsonify({'message': 'Invalid id_insured. Asiguratul nu exista.'}), 400)
+        
+        policy.id_insured = data.get('id_insured', policy.id_insured)
+        policy.policy_no = data.get('policy_no', policy.policy_no)
+        policy.start_date = data.get('start_date', policy.start_date)
+        policy.end_date = data.get('end_date', policy.end_date)
+        policy.amount = data.get('amount', policy.amount)
+        policy.status = data.get('status', policy.status)
+
+        db.session.commit()
+
+        return make_response(jsonify({'message': 'Policy updated successfully'}), 200)
+    except Exception as e:
+        return make_response(jsonify({'message': f'Error updating policy: {str(e)}'}), 500)
 
 @app.route('/policy', methods=['POST'])
 def add_policy():
@@ -157,10 +175,8 @@ def check_insured_exists(id_insured):
     try:
         insured_service_url = f"http://serviciu-clienti:80/insured/{id_insured}"
         response = requests.get(insured_service_url)
-        logging.info(f"Response: {response} .")
         return response.status_code == 200
     except Exception as e:
-        logging.error(f"Error checking if insured with ID {id_insured} exists: {str(e)}")
         return False
 
       
