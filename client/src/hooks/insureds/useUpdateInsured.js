@@ -11,7 +11,7 @@ const useUpdateInsured = () => {
                 address: data.address   
             }
 
-            await axios.put(`http://127.0.0.1:5000/insured/${data.id}`, dataToServer)
+            await axios.put(`http://104.199.60.93/insured/${data.id}`, dataToServer)
             .then(() => {
                 window.location.href = '/insureds/'
             })

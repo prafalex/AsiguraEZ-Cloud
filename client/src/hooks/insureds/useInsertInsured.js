@@ -11,7 +11,7 @@ const useInsertInsured = () => {
                 address: data.address   
             }
 
-            await axios.post('http://127.0.0.1:5000/insured', dataToServer)
+            await axios.post('http://104.199.60.93/insured', dataToServer)
         } catch (err) {
             console.error(err)
         }

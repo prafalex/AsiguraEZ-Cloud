@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import userInsertInsured from '../../hooks/insureds/useInsertInsured'
+import useInsertInsured from '../../hooks/insureds/useInsertInsured'
 
 import NavMenu from '../../components/NavMenu/NavMenu'
 import AppStyles from '../../App.module.sass'
@@ -7,7 +7,7 @@ import AppStyles from '../../App.module.sass'
 function AddNew() {
     const [data, setData] = useState({ firstname: '', surname: '', email: '', phone: '', address: '' })
     const [message, setMessage] = useState('')
-    const { insertInsured } = userInsertInsured()
+    const { insertInsured } = useInsertInsured()
 
     const handleInputs = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -45,7 +45,7 @@ function AddNew() {
                     </div>
                     <div className={AppStyles['form-row']}>
                         <label>Address:</label>
-                        <textarea type='text' name='address' className={AppStyles['input']} onChange={(e) => handleInputs(e)} placeholder='Address' ></textarea>
+                        <textarea type='text' name='address' className={AppStyles['input']} onChange={(e) => handleInputs(e)} placeholder='Address'></textarea>
                     </div>
                     <div className={AppStyles['form-row']}>
                         <input type='submit' className={AppStyles['save-button']} value='Save Data' />    

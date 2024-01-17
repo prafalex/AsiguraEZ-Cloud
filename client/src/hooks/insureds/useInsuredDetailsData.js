@@ -7,7 +7,7 @@ const useInsuredDetailsData = (user_id) => {
 
     const fetchInsuredDetails = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/insured/${user_id}`)
+            const response = await axios.get(`http://104.199.60.93/insured/${user_id}`)
             setInsuredDetails(response.data)
         } catch (error) {
             setCheckData('Couldn\'t get the data for this client. Please try again later...')
