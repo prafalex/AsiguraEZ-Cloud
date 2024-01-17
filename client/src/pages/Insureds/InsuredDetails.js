@@ -135,7 +135,7 @@ function InsuredDetails() {
                                         </>
                                     ))}
                                 </div>
-                            ) : <p className={AppStyles['no-policy-found']}>No policies data found for this client.</p>}
+                            ) : <p className={AppStyles['no-policy-found']}>No policies data found for this insured.</p>}
                         </>
                     ) : <p>Invalid client id. Be sure the client id is bigger than 0 (zero) and not special characters.</p>}
                 </>
