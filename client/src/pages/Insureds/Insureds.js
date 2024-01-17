@@ -31,6 +31,7 @@ function Clients() {
                                     info_1={item.firstName + ' ' + item.surname}
                                     info_2={item.email}
                                     linkTo={'insureds'}
+                                    tableType={'innerPages'}
                                 />
                             ))}
                         </div>

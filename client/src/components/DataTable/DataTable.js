@@ -4,7 +4,7 @@ import useDeleteInsured from '../../hooks/insureds/useDeleteInsured'
 import useDeletePolicy from '../../hooks/policies/useDeletePolicy'
 import styles from './DataTable.module.sass'
 
-function DataTableClients({ id, info_1, info_2, linkTo }) {
+function DataTable({ id, info_1, info_2, linkTo, tableType }) {
     const navigate = useNavigate()
     const { deleteUser } = useDeleteInsured(id)
     const { deletePolicy } = useDeletePolicy(id)
@@ -26,16 +26,20 @@ function DataTableClients({ id, info_1, info_2, linkTo }) {
     }
     
     return (
-        <div key={id} className={styles['table--row']}>
-            <span className={`${styles['data']} ${styles['data-id']}`}>{id}</span>
-            <span className={`${styles['data']} ${styles['data-info-1']}`}>{info_1}</span>
-            <span className={`${styles['data']} ${styles['data-info-2']}`}>{info_2}</span>
-            <span className={`${styles['data']} ${styles['data-actions']}`}>
-                <i onClick={() => linkToDetails(id)} className={`fa-solid fa-eye ${styles['icon']}`}></i>
-                <i onClick={() => deleteData(id)} className={`fa-solid fa-trash-can ${styles['icon']}`}></i>
-            </span>
-        </div>
+        <>
+            <div key={id} className={styles['table--row']}>
+                <span className={`${styles['data']} ${styles['data-id']}`}>{id}</span>
+                <span className={`${styles['data']} ${styles['data-info-1']}`}>{info_1}</span>
+                <span className={`${styles['data']} ${styles['data-info-2']}`}>{info_2}</span>
+                {tableType === 'innerPages' ? (
+                    <span className={`${styles['data']} ${styles['data-actions']}`}>
+                        <i onClick={() => linkToDetails(id)} className={`fa-solid fa-eye ${styles['icon']}`}></i>
+                        <i onClick={() => deleteData(id)} className={`fa-solid fa-trash-can ${styles['icon']}`}></i>
+                    </span>
+                ) : ''}
+            </div>
+        </>
     )
 }
 
-export default DataTableClients
+export default DataTable

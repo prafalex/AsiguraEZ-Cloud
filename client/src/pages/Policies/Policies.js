@@ -32,6 +32,7 @@ function Policies() {
 									info_1={item.policy_no}
 									info_2={item.status}
 									linkTo={'policies'}
+									tableType={'innerPages'}
 								/>
 							))}
 						</div>
