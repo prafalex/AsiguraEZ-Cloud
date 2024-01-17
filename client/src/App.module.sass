@@ -68,3 +68,36 @@ a
             border: unset
             border-radius: 1rem
             cursor: pointer
+
+.policy--table
+    box-shadow: 0 .5rem 3rem .2rem rgba(0, 0, 0, .1)
+
+.policy-details--header
+    color: $black
+    background: $chill-orange
+    font-weight: bold
+    margin-top: 5rem
+
+    .row--type
+        padding: 1.2rem 2.5rem
+
+.policy-details--header,
+.policy-details--row
+    display: grid
+    grid-template-columns: repeat(5, 1fr)
+
+.policy-details--row
+    &:nth-child(odd)
+        color: $white
+        background: $light-violet
+
+    &:nth-child(even)
+        background: $white
+
+    .row--info
+        padding: 1.2rem 2.5rem
+
+.no-policy-found
+    font-size: 3rem
+    font-weight: bold
+    margin-top: 5rem

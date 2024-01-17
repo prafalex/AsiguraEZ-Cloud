@@ -5,6 +5,7 @@ import useInsuredDetailsData from '../../hooks/insureds/useInsuredDetailsData'
 
 import NavMenu from '../../components/NavMenu/NavMenu'
 import AppStyles from '../../App.module.sass'
+import usePolicyData from '../../hooks/policies/usePolicyData'
 
 function InsuredDetails() {
     const [data, setData] = useState({ id: null, firstname: '', surname: '', email: '', phone: '', address: '' })
@@ -14,8 +15,20 @@ function InsuredDetails() {
     const { id } = useParams()
     const { insuredDetails } = useInsuredDetailsData(id)
     const { updateInsured } = useUpdateInsured()
+    const { policies } = usePolicyData()
 
     const isValidId = /^[1-9]\d*$/.test(id)
+
+    const clientPolicies = Object.values(policies).length && policies.filter((policy) => policy.id_insured === insuredDetails.id)
+
+    function formatDate(dateString) {
+        const date = new Date(dateString)
+        const year = date.getFullYear()
+        let month = (date.getMonth() + 1).toString().padStart(2, '0')
+        let day = date.getDate().toString().padStart(2, '0')
+
+        return `${year}-${month}-${day}`
+    }
 
     const handleInputs = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -100,6 +113,29 @@ function InsuredDetails() {
                                     </>
                                 ) : <p>We couldn't get the data for this client.</p>}
                             </form>
+
+                            {Object.values(clientPolicies).length ? (
+                                <div className={AppStyles['policy--table']}>
+                                    <div className={AppStyles['policy-details--header']}>
+                                        <span className={AppStyles['row--type']}>Policy Number</span>
+                                        <span className={AppStyles['row--type']}>Policy Amount</span>
+                                        <span className={AppStyles['row--type']}>Policy Status</span>
+                                        <span className={AppStyles['row--type']}>Policy Start Date</span>
+                                        <span className={AppStyles['row--type']}>Policy End Date</span>
+                                    </div>
+                                    {clientPolicies.map((item) => (
+                                        <>
+                                            <div className={AppStyles['policy-details--row']}>
+                                                <span className={AppStyles['row--info']}>{item.policy_no}</span>
+                                                <span className={AppStyles['row--info']}>{item.amount}</span>
+                                                <span className={AppStyles['row--info']}>{item.status}</span>
+                                                <span className={AppStyles['row--info']}>{formatDate(item.start_date)}</span>
+                                                <span className={AppStyles['row--info']}>{formatDate(item.end_date)}</span>
+                                            </div>
+                                        </>
+                                    ))}
+                                </div>
+                            ) : <p className={AppStyles['no-policy-found']}>No policies data found for this client.</p>}
                         </>
                     ) : <p>Invalid client id. Be sure the client id is bigger than 0 (zero) and not special characters.</p>}
                 </>
